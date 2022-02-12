@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 class MainTest {
@@ -38,7 +39,6 @@ class MainTest {
     }
 
 
-
     @Test
     public void shouldGetJavaFilesFromDirectory() {
         File directory = new File("src/main/java");
@@ -49,23 +49,31 @@ class MainTest {
 
 
     @Test
-    public void shouldPrintStreamByLambda(){
-        Stream.of(1,2,3,4,5)
-                .forEach(s-> System.out.println(s));
+    public void shouldPrintStreamByLambda() {
+        Stream.of(1, 2, 3, 4, 5)
+                .forEach(s -> System.out.println(s));
     }
 
     @Test
-    public void shouldPrintStreamByReferenceMethod(){
-        Stream.of(1,2,3,4,5)
+    public void shouldPrintStreamByReferenceMethod() {
+        Stream.of(1, 2, 3, 4, 5)
                 .forEach(System.out::println);
     }
 
-@Test
-    public void shouldPrintStreamWithVar(){
- //   Consumer<Integer> consumer= number-> System.out.println(number);
-    Consumer<Integer> consumer=System.out::println;
-    Stream.of(1,2,3,4,5).forEach(consumer);
-}
+    @Test
+    public void shouldPrintStreamWithVar() {
+        //   Consumer<Integer> consumer= number-> System.out.println(number);
+        Consumer<Integer> consumer = System.out::println;
+        Stream.of(1, 2, 3, 4, 5).forEach(consumer);
+    }
 
+    @Test
+    public void shouldGenerateRandom() {
+        Stream.generate(Math::random)
+                .limit(10)
+                .mapToDouble(m->m*10)
+                .mapToLong(Math::round)
+                .forEach(System.out::println);
+    }
 
 }
